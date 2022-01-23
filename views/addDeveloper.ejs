@@ -13,7 +13,7 @@
                     <input type="email" name="developerEmail" id="email" class="form-control" placeholder="Email" required>
                     <br />
                     <label for="phone">Phone number *</label>
-                    <input type="tel" name="developerPhone" id="phone" class="form-control" placeholder="+00000-000-0000" pattern="\+[0-9]{4,5}-[0-9]{3}-[0-9]{3,4}" required>
+                    <input type="tel" name="developerPhone" id="phone" class="form-control" placeholder="+000000000000" pattern="\+[0-9]{4,5}[0-9]{3}[0-9]{3,4}" required>
                     <br />
                     <label for="location">Your Location *</label>
                     <input type="text" name="developerLocation" id="location" class="form-control" placeholder="Location" required>
@@ -39,7 +39,7 @@
                     <textarea class="form-control" name="developerDescription" id="desc" rows="3" placeholder="Description"></textarea>
                     <br />
                     <label for="yoe">Years of experience *</label>
-                    <input type="number" min="0" name="developerYoe" id="yoe" class="form-control" placeholder="Years of experience" required>
+                    <input type="number" min="0" max="30" name="developerYoe" id="yoe" class="form-control" placeholder="Years of experience" required>
                     <br />
                     <div>
                         <label for="nativeLanguage">Native language *</label>
@@ -55,6 +55,7 @@
                     <small class="req-fields-info">Fields tagged with * must be filled!</small>
                     <br>
                     <button type="submit" class="btn btn-primary mt-3 mb-5">Submit</button>
+                    
                 </div>
                 
             </div>
