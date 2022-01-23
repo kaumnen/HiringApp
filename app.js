@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import { sendNewDeveloper } from './database/mongodb/models/developer.js';
 
 const app = express();
 
@@ -32,7 +33,7 @@ app.post('/addDeveloper', (req, res) => {
         linkedin: req.body.developerLinkedIn
     };
 
-    console.log(developer);
+    sendNewDeveloper(developer);
 })
 
 app.listen('3000', () => {
