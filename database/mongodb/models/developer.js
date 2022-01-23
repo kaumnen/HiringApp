@@ -13,13 +13,14 @@ const developerSchema = new mongoose.Schema({
     description: String,
     yoe: Number,
     language: String,
-    linkedin: String
+    linkedin: String,
+    lastUpdated: Date
 });
 
 const Developer = mongoose.model('Developer', developerSchema);
 
 
-export function sendNewDeveloper({ name, email, phone, location, image, pph, currency, technology, description, yoe, language, linkedin }) {
+export function sendNewDeveloper({ name, email, phone, location, image, pph, currency, technology, description, yoe, language, linkedin, lastUpdated }) {
     let developer = {
         name: name,
         email: email,
@@ -32,7 +33,8 @@ export function sendNewDeveloper({ name, email, phone, location, image, pph, cur
         description: description,
         yoe: yoe,
         language: language,
-        linkedin: linkedin
+        linkedin: linkedin,
+        lastUpdated: lastUpdated
     };
 
     connect().then(() => {
