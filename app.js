@@ -34,6 +34,7 @@ app.post('/addDeveloper', (req, res) => {
     };
 
     sendNewDeveloper(developer);
+    res.redirect('/');
 })
 
 app.listen('3000', () => {
