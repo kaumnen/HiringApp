@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/add', (req, res) => {
-    res.render('addDeveloper', { developer: {}, verb: 'New', button: 'Submit', func: 'changeDeveloper' });
+    res.render('changeDeveloper', { developer: {}, verb: 'New', button: 'Submit', func: 'changeDeveloper' });
 });
 
 app.post('/changeDeveloper', (req, res) => {
