@@ -1,0 +1,168 @@
+<%- include('partials/header') %>
+<h1 class="text-center mt-2"><%= verb %> developer</h1>
+<hr>
+<form action="/<%= func %>" method="post">
+    <div class="form-group col-auto my-3">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <input type="hidden" name="id" value="<%- developer.id %>">
+                    <label for="name">Your name *</label>
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Your name"
+                    <% if (developer) { %>
+                        value="<%- developer.name %>"
+                    <% } else { %>
+                        value=""
+                    <% } %>
+                    required>
+                    <br />
+                    <label for="email">Email *</label>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Email" 
+                    <% if (developer) { %>
+                        value="<%- developer.email %>"
+                    <% } else { %>
+                        value=""
+                    <% } %>
+                    required>
+                    <br />
+                    <label for="phone">Phone number *</label>
+                    <input type="tel" name="phone" id="phone" class="form-control" placeholder="+000000000000" pattern="\+[0-9]{4,5}[0-9]{3}[0-9]{3,4}" 
+                    <% if (developer) { %>
+                        value="<%- developer.phone %>"
+                    <% } else { %>
+                        value=""
+                    <% } %>
+                    required>
+                    <br />
+                    <label for="location">Your Location *</label>
+                    <input type="text" name="location" id="location" class="form-control" placeholder="Location" 
+                    <% if (developer) { %>
+                        value="<%- developer.location %>"
+                    <% } else { %>
+                        value=""
+                    <% } %>
+                    required>
+                    <br />
+                    <label for="image">Profile picture</label>
+                    <input type="url" name="image" id="image" class="form-control-file" aria-describedby="pfphelp" pattern="https://.*"
+                    <% if (developer) { %>
+                        value="<%- developer.profilePicture %>"
+                    <% } else { %>
+                        value=""
+                    <% } %>
+                    >
+                    <small id="pfphelp" class="form-text text-muted">Must be https:// url!</small>
+                    <br />
+                    <label for="pph">Price per Hour *</label>
+                    <input type="number" min="0" name="pph" id="pph" class="form-control" placeholder="Price per Hour" 
+                    <% if (developer) { %>
+                        value="<%- developer.pph %>"
+                    <% } else { %>
+                        value=""
+                    <% } %>
+                    required>
+                    <div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="euro" value="€" name="currency" 
+                            <% if (developer && developer.currency === "euro") { %>
+                                checked 
+                            <% } %>
+                            required>
+                            <label class="form-check-label" for="euro">€</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="dollar" value="$" name="currency" 
+                            <% if (developer && developer.currency === "dollar") { %>
+                                checked 
+                            <% } %>
+                            required>
+                            <label class="form-check-label" for="dollar">$</label>
+                        </div>
+                    </div>    
+                    <br />
+                    <label for="techLanguage">Technology *</label>
+                        <div>
+                            <select class="custom-select mr-sm-2" id="techLanguage" name="technology" required>
+                                <option value="Java Script"
+                                <% if (developer && developer.technology === "Java Script") { %>
+                                    selected
+                                <% } %>
+                                >Javascript</option>
+                                <option value="Java"
+                                <% if (developer && developer.technology === "Java") { %>
+                                    selected
+                                <% } %>
+                                >Java</option>
+                                <option value=".NET"
+                                <% if (developer && developer.technology === ".NET") { %>
+                                    selected
+                                <% } %>
+                                >.NET</option>
+                                <option value="Flutter"
+                                <% if (developer && developer.technology === "Flutter") { %>
+                                    selected
+                                <% } %>
+                                >Flutter</option>
+                                <option value="Python"
+                                <% if (developer && developer.technology === "Python") { %>
+                                    selected
+                                <% } %>
+                                >Python</option>
+                                <option value="PHP"
+                                <% if (developer && developer.technology === "PHP") { %>
+                                    selected
+                                <% } %>
+                                >PHP</option>
+                            </select>
+                        </div>
+                    <br />
+                    <label for="desc">Description</label>
+                    <textarea class="form-control" maxlength="150" name="description" id="desc" rows="3" placeholder="Description. 150 characters max!"><% if (developer) { %><%- developer.description %><% } %></textarea>
+                    <br />
+                    <label for="yoe">Years of experience *</label>
+                    <input type="number" min="0" max="30" name="yoe" id="yoe" class="form-control" placeholder="Years of experience" 
+                    <% if (developer) { %>
+                        value="<%- developer.yoe %>"
+                    <% } %>
+                    required>
+                    <br />
+                    <div>
+                        <label for="nativeLanguage">Native language *</label>
+                        <select class="custom-select mr-sm-2" id="nativeLanguage" name="language" required>
+                            <option value="English"
+                            <% if (developer && developer.language === "English") { %>
+                                selected
+                            <% } %>
+                            >English</option>
+                            <option value="Serbian"
+                            <% if (developer && developer.language === "Serbian") { %>
+                                selected
+                            <% } %>
+                            >Serbian</option>
+                            <option value="Bulgarian"
+                            <% if (developer && developer.language === "Bulgarian") { %>
+                                selected
+                            <% } %>
+                            >Bulgarian</option>
+                        </select>
+                    </div>
+                    <br />
+                    <label for="linkedin">LinkedIn Profile</label>
+                    <input type="url" name="linkedin" id="linkedin" class="form-control mb-3" placeholder="https://www.linkedin.com/in/example" pattern="https://www.linkedin.com/in/.*"
+                    <% if (developer) { %>
+                        value="<%- developer.linkedin %>"
+                    <% } %>
+                    >
+                    <small class="req-fields-info">Fields tagged with * must be filled!</small>
+                    <br>
+                    <button type="submit" class="btn btn-primary mt-3 mb-3"><%= button %></button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+        
+        
+</form>
+
+<%- include('partials/footer') %>
