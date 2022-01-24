@@ -16,3 +16,19 @@ export function getDeveloperList() {
         });
     });
 }
+
+export function getHiredDeveloperList() {
+    return new Promise((resolve, reject) => {
+        connect().then(() => {
+            mongoose.model('Developer').find({ hired: true }, (error, developers) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(developers);
+                }
+            });
+        }).catch(error => {
+            reject(error);
+        });
+    });
+}
