@@ -14,13 +14,17 @@ const developerSchema = new mongoose.Schema({
     yoe: Number,
     language: String,
     linkedin: String,
-    lastUpdated: Date
+    lastUpdated: Date,
+    hired: Boolean,
+    startDate: Date,
+    endDate: Date,
+    typeOfHire: String
 });
 
 const Developer = mongoose.model('Developer', developerSchema);
 
 
-export function sendNewDeveloper({ name, email, phone, location, image, pph, currency, technology, description, yoe, language, linkedin, lastUpdated }) {
+export function sendNewDeveloper({ name, email, phone, location, image, pph, currency, technology, description, yoe, language, linkedin, lastUpdated, hired, startDate, endDate }) {
     return new Promise((resolve, reject) => {
         connect().then(() => {
             let developer = new Developer({
@@ -36,7 +40,11 @@ export function sendNewDeveloper({ name, email, phone, location, image, pph, cur
                 yoe: yoe,
                 language: language,
                 linkedin: linkedin,
-                lastUpdated: lastUpdated
+                lastUpdated: lastUpdated,
+                hired: hired,
+                startDate: startDate,
+                endDate: endDate,
+                typeOfHire: ""
             });
 
             developer.save((error) => {

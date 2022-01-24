@@ -1,0 +1,42 @@
+<%- include('partials/header') %>
+
+<h1 class="text-center mt-2">Hire this developer!</h1>
+<hr>
+<div class="card-columns w-75 m-auto mb-7">
+
+    <div class="card m-4 border-primary">
+
+        <% if (developer.image) { %>
+            <img class="card-img-top" src="<%- developer.image %>" alt="Developer image">
+        <% } else { %>
+            <img class="card-img-top" src="images/NoImageAvailable.jpg" alt="No developer image available">
+        <% } %>
+        <div class="card-body">
+        <h5 class="card-title"> <%= developer.name %> </h5>
+        <p class="card-text"><b>E-Mail:</b> <%= developer.email %> <br /> <b>Phone:</b> <%= developer.phone %> <br /> <b>Location:</b> <%= developer.location %> <br /> <b>Price per hour:</b> <%= developer.pph %> <%= developer.currency %> <br /> <b>Technology:</b> <%= developer.technology %> <br /> <b>Description:</b> <%= developer.description %> <br /> <b>Years of experience:</b> <%= developer.yoe %> <br /> <b>Native language:</b> <%= developer.language %> <br /> <b>Linkedin profile link:</b> <%= developer.linkedin %></p>
+        </div>
+        <form action="/hireDev" class="mb-3 ml-3" method="post">
+            <input type="hidden" name="id" value="<%= developer.id %>">
+            <input type="hidden" name="name" value="<%= developer.name %>">
+            <input type="hidden" name="email" value="<%= developer.email %>">
+            <input type="hidden" name="phone" value="<%= developer.phone %>">
+            <input type="hidden" name="location" value="<%= developer.location %>">
+            <input type="hidden" name="profilePicture" value="<%= developer.image %>">
+            <input type="hidden" name="pph" value="<%= developer.pph %>">
+            <input type="hidden" name="currency" value="<%= developer.currency %>">
+            <input type="hidden" name="technology" value="<%= developer.technology %>">
+            <input type="hidden" name="description" value="<%= developer.description %>">
+            <input type="hidden" name="yoe" value="<%= developer.yoe %>">
+            <input type="hidden" name="language" value="<%= developer.language %>">
+            <input type="hidden" name="linkedin" value="<%= developer.linkedin %>">
+            <input type="hidden" name="edit" value="true">
+            <h3>From:</h3><input type="date" id="startDate" name="hireStartDate" value="<%= startDate %>" min="<%= startDate %>">
+            <br />
+            <h3>To:</h3><input type="date" id="endDate" name="hireEndDate" value="<%= endDate %>" min="<%= endDate %>">
+            <br />
+            <button type="submit" class="btn btn-success mt-3" name="typeOfHire" value="singleHire">Submit</button>
+        </form>
+    </div>
+</div>
+
+<%- include('partials/footer') %></input>
