@@ -63,7 +63,7 @@
                     required>
                     <div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="euro" value="euro" name="currency" 
+                            <input class="form-check-input" type="radio" id="euro" value="€" name="currency" 
                             <% if (developer && developer.currency === "euro") { %>
                                 checked 
                             <% } %>
@@ -71,7 +71,7 @@
                             <label class="form-check-label" for="euro">€</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="dollar" value="dollar" name="currency" 
+                            <input class="form-check-input" type="radio" id="dollar" value="$" name="currency" 
                             <% if (developer && developer.currency === "dollar") { %>
                                 checked 
                             <% } %>
@@ -117,11 +117,7 @@
                         </div>
                     <br />
                     <label for="desc">Description</label>
-                    <textarea class="form-control" maxlength="150" name="description" id="desc" rows="3" placeholder="Description. 150 characters max!">
-                    <% if (developer) { %>
-                        <%- developer.description %>
-                    <% } %>
-                    </textarea>
+                    <textarea class="form-control" maxlength="150" name="description" id="desc" rows="3" placeholder="Description. 150 characters max!"><% if (developer) { %><%- developer.description %><% } %></textarea>
                     <br />
                     <label for="yoe">Years of experience *</label>
                     <input type="number" min="0" max="30" name="yoe" id="yoe" class="form-control" placeholder="Years of experience" 
