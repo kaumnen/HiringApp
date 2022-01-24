@@ -21,26 +21,33 @@ const Developer = mongoose.model('Developer', developerSchema);
 
 
 export function sendNewDeveloper({ name, email, phone, location, image, pph, currency, technology, description, yoe, language, linkedin, lastUpdated }) {
-    let developer = {
-        name: name,
-        email: email,
-        phone: phone,
-        location: location,
-        image: image,
-        pph: pph,
-        currency: currency,
-        technology: technology,
-        description: description,
-        yoe: yoe,
-        language: language,
-        linkedin: linkedin,
-        lastUpdated: lastUpdated
-    };
+    return new Promise((resolve, reject) => {
+        connect().then(() => {
+            let developer = new Developer({
+                name: name,
+                email: email,
+                phone: phone,
+                location: location,
+                image: image,
+                pph: pph,
+                currency: currency,
+                technology: technology,
+                description: description,
+                yoe: yoe,
+                language: language,
+                linkedin: linkedin,
+                lastUpdated: lastUpdated
+            });
 
-    connect().then(() => {
-        mongoose.model('Developer').create(developer);
-        console.log("New developer added to database!");
-    }).catch(error => {
-        console.error(error);
+            developer.save((error) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve();
+                }
+            });
+        }).catch(error => {
+            reject(error);
+        });
     });
 }
