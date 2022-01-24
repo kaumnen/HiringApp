@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { sendNewDeveloper } from './database/mongodb/models/developer.js';
 import { getDeveloperList } from './database/mongodb/getDevelopers.js';
+import { deleteDeveloper } from './database/mongodb/deleteDeveloper.js';
 
 const app = express();
 
@@ -18,7 +19,7 @@ app.get('/', (req, res) => {
 
 app.get('/add', (req, res) => {
     res.render('addDeveloper');
-})
+});
 
 app.post('/addDeveloper', (req, res) => {
     let datetime = new Date();
@@ -40,8 +41,21 @@ app.post('/addDeveloper', (req, res) => {
         lastUpdated: lastUpdated
     };
 
-    sendNewDeveloper(developer);
-    res.redirect('/');
+    sendNewDeveloper(developer).then(() => {
+        res.render('developerStatus', { devStatus: 'successfully added' });
+    }).catch(() => {
+        res.render('developerStatus', { devStatus: 'not added. Please try again' });
+    });
+    
+});
+
+app.post('/updateDev', (req, res) => {
+    deleteDeveloper(req.body.email).then(() => {
+        res.render('developerStatus', { devStatus: 'successfully deleted' });
+    }).catch(() => {
+        res.render('developerStatus', { devStatus: 'not deleted. Please try again' });
+    });
+    
 })
 
 app.listen('3000', () => {

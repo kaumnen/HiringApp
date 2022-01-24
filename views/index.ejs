@@ -20,7 +20,7 @@
                     <h5 class="card-title"> <%= developers[i].name %> </h5>
                     <p class="card-text"><b>E-Mail:</b> <%= developers[i].email %> <br /> <b>Phone:</b> <%= developers[i].phone %> <br /> <b>Location:</b> <%= developers[i].location %> <br /> <b>Price per hour:</b> <%= developers[i].pph %> <%= developers[i].currency %> <br /> <b>Technology:</b> <%= developers[i].technology %> <br /> <b>Description:</b> <%= developers[i].description %> <br /> <b>Years of experience:</b> <%= developers[i].yoe %> <br /> <b>Native language:</b> <%= developers[i].language %> <br /> <b>Linkedin profile link:</b> <%= developers[i].linkedin %></p>
                     </div>
-                    <form action="/changeDev" class="mb-3 ml-3" method="post">
+                    <form action="/updateDev" class="mb-3 ml-3" method="post">
                         <input type="hidden" name="email" value="<%= developers[i].email %>">
                         <button type="submit" name="changeButton" value="change" class="btn btn-info mr-3">Change</button><button type="submit" name="deleteButton" value="delete" class="btn btn-danger">Delete</button>
                     </form>
