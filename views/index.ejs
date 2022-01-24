@@ -1,5 +1,30 @@
 <%- include('partials/header') %>
 
-<h1><br /> Welcome to my hiring platform!</h1>
+<h1 class="text-center mt-2">Developers</h1>
+<hr>
+
+    <div class="card-columns w-75 m-auto mb-7">
+    
+        <% for(let i = 0; i < developers.length; i++) { %>
+            <% if (developers[i].hired) { %>
+                <div class="card m-4 border-secondary">
+            <% } else { %>
+                <div class="card m-4 border-primary">
+            <% } %>
+                    <% if (developers[i].image) { %>
+                        <img class="card-img-top" src="<%- developers[i].image %>" alt="Developer image">
+                    <% } else { %>
+                        <img class="card-img-top" src="images/NoImageAvailable.jpg" alt="No developer image available">
+                    <% } %>
+                    <div class="card-body">
+                    <h5 class="card-title"> <%= developers[i].name %> </h5>
+                    <p class="card-text"><b>E-Mail:</b> <%= developers[i].email %> <br /> <b>Phone:</b> <%= developers[i].phone %> <br /> <b>Location:</b> <%= developers[i].location %> <br /> <b>Price per hour:</b> <%= developers[i].pph %> <%= developers[i].currency %> <br /> <b>Technology:</b> <%= developers[i].technology %> <br /> <b>Description:</b> <%= developers[i].description %> <br /> <b>Years of experience:</b> <%= developers[i].yoe %> <br /> <b>Native language:</b> <%= developers[i].language %> <br /> <b>Linkedin profile link:</b> <%= developers[i].linkedin %></p>
+                    </div>
+                    <div class="card-footer">
+                    <small class="text-muted">Last updated: <%= developers[i].lastUpdated %></small>
+                    </div>
+                </div>
+        <% }; %>
+  </div>
 
 <%- include('partials/footer') %>

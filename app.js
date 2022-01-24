@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { sendNewDeveloper } from './database/mongodb/models/developer.js';
+import { getDeveloperList } from './database/mongodb/getDevelopers.js';
 
 const app = express();
 
@@ -10,7 +11,9 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.render('index');
+    getDeveloperList().then(developers => {
+        res.render('index', { developers: developers });
+    }).catch(console.error);
 });
 
 app.get('/add', (req, res) => {
@@ -18,6 +21,9 @@ app.get('/add', (req, res) => {
 })
 
 app.post('/addDeveloper', (req, res) => {
+    let datetime = new Date();
+    let lastUpdated = datetime.toLocaleString();
+    
     let developer = {
         name: req.body.developerName,
         email: req.body.developerEmail,
@@ -30,7 +36,8 @@ app.post('/addDeveloper', (req, res) => {
         description: req.body.developerDescription,
         yoe: req.body.developerYoe,
         language: req.body.developerNativeLanguage,
-        linkedin: req.body.developerLinkedIn
+        linkedin: req.body.developerLinkedIn,
+        lastUpdated: lastUpdated
     };
 
     sendNewDeveloper(developer);
