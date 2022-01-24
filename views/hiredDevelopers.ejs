@@ -1,6 +1,6 @@
 <%- include('partials/header') %>
 
-<h1 class="text-center mt-2">Developers</h1>
+<h1 class="text-center mt-2">Hired developers</h1>
 <hr>
 
     <div class="card-columns w-75 m-auto mb-7">
@@ -16,7 +16,29 @@
                     <% } %>
                     <div class="card-body">
                     <h5 class="card-title"> <%= developers[i].name %> </h5>
-                    <p class="card-text"><b>E-Mail:</b> <%= developers[i].email %> <br /> <b>Phone:</b> <%= developers[i].phone %> <br /> <b>Location:</b> <%= developers[i].location %> <br /> <b>Price per hour:</b> <%= developers[i].pph %> <%= developers[i].currency %> <br /> <b>Technology:</b> <%= developers[i].technology %> <br /> <b>Description:</b> <%= developers[i].description %> <br /> <b>Years of experience:</b> <%= developers[i].yoe %> <br /> <b>Native language:</b> <%= developers[i].language %> <br /> <b>Linkedin profile link:</b> <%= developers[i].linkedin %></p>
+                    <p class="card-text">
+                        <b>E-Mail:</b> <%= developers[i].email %>
+                        <br />
+                        <b>Phone:</b> <%= developers[i].phone %>
+                        <br />
+                        <b>Location:</b> <%= developers[i].location %>
+                        <br />
+                        <b>Price per hour:</b> <%= developers[i].pph %> <%= developers[i].currency %>
+                        <br />
+                        <b>Technology:</b> <%= developers[i].technology %>
+                        <br />
+                        <b>Description:</b> <%= developers[i].description %>
+                        <br />
+                        <b>Years of experience:</b> <%= developers[i].yoe %>
+                        <br />
+                        <b>Native language:</b> <%= developers[i].language %>
+                        <br />
+                        <b>Linkedin profile link:</b> <%= developers[i].linkedin %>
+                        <hr>
+                        <b>Hired from:</b> <%= developers[i].startDate.toString().slice(0, 31) %>
+                        <br />
+                        <b>Hired until:</b> <%= developers[i].endDate.toString().slice(0, 31) %>
+                    </p>
                     </div>
                     <div class="card-footer">
                     <small class="text-muted">Last updated: <%= developers[i].lastUpdated %></small>
