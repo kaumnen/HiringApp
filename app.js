@@ -14,6 +14,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
+let calculateDates = () => {
+    let today = new Date();
+    let todayDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    let tomorrow = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + (today.getDate() + 1);
+
+    let todayReturn = todayDate.replace(/(^|\D)(\d)(?!\d)/g, '$10$2');
+    let tomorrowReturn = tomorrow.replace(/(^|\D)(\d)(?!\d)/g, '$10$2');
+
+    return { todayReturn, tomorrowReturn };
+}
+
+let checkDates = (startDate, endDate) => {
+    let hireStartDate = new Date(startDate);
+    let hireEndDate = new Date(endDate);
+
+    return hireStartDate.getTime() >= hireEndDate.getTime()
+}
+
 app.get('/', (req, res) => {
     getDeveloperList().then(developers => {
         hireCheck(developers).then(() => {
@@ -22,14 +40,7 @@ app.get('/', (req, res) => {
             console.log(error);
         });
 
-        let today = new Date();
-        let todayDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        let tomorrow = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + (today.getDate() + 1);
-
-        let startDate = todayDate.replace(/(^|\D)(\d)(?!\d)/g, '$10$2');
-        let endDate = tomorrow.replace(/(^|\D)(\d)(?!\d)/g, '$10$2');
-
-        res.render('index', { developers: developers, startDate: startDate, endDate: endDate });
+        res.render('index', { developers: developers, startDate: calculateDates().todayReturn, endDate: calculateDates().tomorrowReturn });
     }).catch(console.error);
 });
 
@@ -42,6 +53,33 @@ app.get('/hired', (req, res) => {
 app.get('/add', (req, res) => {
     res.render('changeDeveloper', { developer: {}, verb: 'New', button: 'Submit', func: 'changeDeveloper' });
 });
+
+app.get('/hireTeam', (req, res) => {
+    getDeveloperList().then(developers => {
+        let dates = calculateDates();
+        res.render('hireTeamDevs', {developers: developers, startDate: calculateDates().todayReturn, endDate: calculateDates().tomorrowReturn });
+    }).catch(console.error);
+});
+
+app.post('/hireTeam', (req, res) => {
+    if (checkDates(req.body.hireStartDate, req.body.hireEndDate)) {
+        res.render('developerStatus', { devStatus: 'Hire start date cannot be on, or after end date!' });
+    } else if (!req.body.developers || req.body.developers.length <= 1) {
+        res.render('developerStatus', { devStatus: 'You have to hire 2 or more developers for a team hire!' });
+    } else {
+        console.log(req.body);
+        req.body.developers.forEach(devID => {
+            let teamHireStartDate = new Date(req.body.hireStartDate);
+            let teamHireEndDate = new Date(req.body.hireEndDate);
+
+            hireDeveloper(devID, 'team', teamHireStartDate, teamHireEndDate).then(() => {
+                res.render('developerStatus', { devStatus: 'Developer team successfully hired' });
+            }).catch(() => {
+                res.render('developerStatus', { devStatus: 'Developer team not hired. Please try again' });
+            });
+        });
+    }
+})
 
 app.post('/changeDeveloper', (req, res) => {
     let datetime = new Date();
@@ -68,19 +106,20 @@ app.post('/changeDeveloper', (req, res) => {
     };
 
     sendNewDeveloper(developer).then(() => {
-        res.render('developerStatus', { devStatus: 'successfully added' });
+        res.render('developerStatus', { devStatus: 'New developer successfully added' });
     }).catch(() => {
-        res.render('developerStatus', { devStatus: 'not added. Please try again' });
+        res.render('developerStatus', { devStatus: 'New developer not added. Please try again' });
     });
     
 });
 
 app.post('/editDev', (req, res) => {
+    console.log(req.body);
     if (req.body.deleteButton) {
         deleteDeveloper(req.body.email).then(() => {
-            res.render('developerStatus', { devStatus: 'successfully deleted' });
+            res.render('developerStatus', { devStatus: 'Developer successfully deleted' });
         }).catch(() => {
-            res.render('developerStatus', { devStatus: 'not deleted. Please try again' });
+            res.render('developerStatus', { devStatus: 'Developer not deleted. Please try again' });
         });
     } else if (req.body.changeButton) {
         res.render('changeDeveloper', { developer: req.body, verb: 'Edit', button: 'Update', func: 'updateDeveloper' });
@@ -93,24 +132,22 @@ app.post('/editDev', (req, res) => {
 });
 
 app.post('/hireDev', (req, res) => {
-    let startDate = new Date(req.body.hireStartDate);
-    let endDate = new Date(req.body.hireEndDate);
-    if (startDate.getTime() >= endDate.getTime()) {
-        res.render('developerStatus', { devStatus: 'start date cannot be on, or after end date' });
+    if (checkDates(req.body.hireStartDate, req.body.hireEndDate)) {
+        res.render('developerStatus', { devStatus: 'Hire start date cannot be on, or after end date' });
     } else {
-        hireDeveloper(req.body.id, req.body.typeOfHire, req.body.hireStartDate, req.body.hireEndDate).then(() => {
-            res.render('developerStatus', { devStatus: 'successfully hired' });
+        hireDeveloper(req.body.id, 'single', req.body.hireStartDate, req.body.hireEndDate).then(() => {
+            res.render('developerStatus', { devStatus: 'Developer successfully hired' });
         }).catch(() => {
-            res.render('developerStatus', { devStatus: 'not hired. Please try again' });
+            res.render('developerStatus', { devStatus: 'Developer not hired. Please try again' });
         });
     }
 });
 
 app.post('/updateDeveloper', (req, res) => {
     updateDeveloper(req.body.id, req.body).then(() => {
-        res.render('developerStatus', { devStatus: 'successfully updated' });
+        res.render('developerStatus', { devStatus: 'Developer successfully updated' });
     }).catch(error => {
-        res.render('developerStatus', { devStatus: 'not updated. Please try again' });
+        res.render('developerStatus', { devStatus: 'Developer not updated. Please try again' });
     });
 });
 

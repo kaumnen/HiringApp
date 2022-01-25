@@ -1,0 +1,23 @@
+<%- include('partials/header') %>
+
+<h1 class="text-center mt-2">Hire team of developers!</h1>
+<hr>
+    <form action="/hireTeam" method="post" class="text-center mb-5">
+        <% for(let i = 0; i < developers.length; i++) { %>
+            <% if (!developers[i].hired) { %>
+                <input type="checkbox" id="<%= developers[i]._id %>" name="developers[]" value="<%= developers[i]._id %>"> 
+                <label for="<%= developers[i]._id %>"><%= developers[i].name %> (<%= developers[i].email %> )</label>
+                <br />
+            <% } %>
+        <% }; %>
+        <br />
+        <h3>From:</h3><input type="date" id="startDate" name="hireStartDate" value="<%= startDate %>" min="<%= startDate %>">
+        <br />
+        <h3>To:</h3><input type="date" id="endDate" name="hireEndDate" value="<%= endDate %>" min="<%= endDate %>">
+        <br />
+        <br />
+        <input type="submit" class="btn btn-success mt-2">
+    </form>
+</div>
+
+<%- include('partials/footer') %></input>
