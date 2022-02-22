@@ -6,6 +6,8 @@
 # Description
 This app lets you add, delete, edit and view developers, as well as hire them as a team, or solo!
 
+NOTE: Might cause a slight delay in loading, because of Heroku sleep function. Request made after that one will perform normally.    
+
 # Features
 - hosted 24/7 on heroku and mongodb atlas
 - responsive
